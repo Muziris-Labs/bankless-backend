@@ -77,4 +77,31 @@ router.delete("/delete/:pubkey", [auth, safeAuth], async (req, res) => {
   }
 });
 
+router.put("/update/:pubkey", [auth, safeAuth], async (req, res) => {
+  const pubkey = req.params.pubkey;
+  const safeAddress = req.body.safeAddress;
+
+  const name = req.body.name;
+
+  try {
+    const contributor = await Contributor.findOne({
+      pubkey,
+      safe: safeAddress,
+    });
+
+    if (!contributor) {
+      return res.status(404).json({ msg: "Contributor not found" });
+    }
+
+    contributor.name = name;
+
+    await contributor.save();
+
+    res.json(contributor);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Server Error" });
+  }
+});
+
 module.exports = router;
