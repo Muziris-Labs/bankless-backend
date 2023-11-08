@@ -18,6 +18,15 @@ router.post("/add", [auth, safeAuth], async (req, res) => {
   }
 
   try {
+    const existingContributor = await Contributor.findOne({
+      pubkey: contributorPubkey,
+      safe: safeAddress,
+    });
+
+    if (existingContributor) {
+      return res.status(400).json({ msg: "Contributor already exists" });
+    }
+
     const newContributor = new Contributor({
       pubkey: contributorPubkey,
       safe: safeAddress,
