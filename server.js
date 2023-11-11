@@ -15,6 +15,7 @@ connectDB();
 
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/contributors", require("./routes/api/contributors"));
+app.use("/api/transactions", require("./routes/api/transactions"));
 
 app.get("/", (req, res) => {
   res.send("API Running");
