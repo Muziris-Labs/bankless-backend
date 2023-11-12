@@ -15,7 +15,9 @@ router.post("/add", [auth], async (req, res) => {
 
   const sender = req.body.sender;
 
-  if (!status || !price || !contributor || !sender) {
+  const role = req.body.role;
+
+  if (!status || !price || !contributor || !sender || !role) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
@@ -25,6 +27,7 @@ router.post("/add", [auth], async (req, res) => {
       price,
       contributor,
       sender,
+      role,
     });
 
     const transaction = await newTransaction.save();

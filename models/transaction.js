@@ -21,6 +21,10 @@ const TransactionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = Transaction = mongoose.model("Transaction", TransactionSchema);
